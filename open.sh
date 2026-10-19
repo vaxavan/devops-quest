@@ -12,6 +12,7 @@ if [ ! -f "$f" ]; then
 fi
 read -r -p "Пароль от уровня $n: " p
 if openssl enc -d -aes-256-cbc -pbkdf2 -a -in "$f" -pass pass:"$p" 2>/dev/null | tar -xz 2>/dev/null; then
+  if [ -f "level$n/.build.sh" ]; then (cd "level$n" && bash .build.sh && rm -f .build.sh); fi
   echo "Открыто! Заходи: cd level$n"
   echo "Посмотри, что внутри (ls), и прочитай задание: cat task.txt"
 else
